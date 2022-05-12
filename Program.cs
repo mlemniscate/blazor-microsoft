@@ -7,6 +7,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddHttpClient();
 builder.Services.AddSqlite<PizzaStoreContext>("Data Source=pizza.db");
+builder.Services.AddScoped<OrderState>();
 
 
 var app = builder.Build();
@@ -34,5 +35,9 @@ using (var scope = scopeFactory.CreateScope())
         SeedData.Initialize(db);
     }
 }
+
+app.UseRequestLocalization(new RequestLocalizationOptions()
+    .AddSupportedCultures(new[] { "en-US" })
+    .AddSupportedUICultures(new[] { "en-US"}));
 
 app.Run();
